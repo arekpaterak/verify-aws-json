@@ -57,7 +57,7 @@ func TestVerifyPolicy(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-			got, err := verifyPolicy(testCase.filePath)
+			got, err := VerifyPolicy(testCase.filePath)
 			if (err != nil) != testCase.wantError {
 				t.Fatalf("verifyPolicy() error = %v, wantError %v", err, testCase.wantError)
 				return

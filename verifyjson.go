@@ -5,30 +5,32 @@ import (
 	"os"
 )
 
-type PolicyDocument struct {
-	Version   string
-	Statement []struct {
-		Sid     string
-		Effect  string
-		Action  []string
-		Resource string
-	}
-}
 
 type Policy struct {
 	PolicyName     string
 	PolicyDocument PolicyDocument
 }
 
-func verifyPolicy(filePath string) (bool, error) {
+type PolicyDocument struct {
+	Version    string
+	Statement  []Statement
+}
+
+type Statement struct {
+	Sid      string
+	Effect   string
+	Action   []string
+	Resource string
+}
+
+func VerifyPolicy(filePath string) (bool, error) {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
 		return false, err
 	}
 
 	var policy Policy
-	err = json.Unmarshal(data, &policy)
-	if err != nil {
+	if err := json.Unmarshal(data, &policy); err != nil {
 		return false, err
 	}
 
